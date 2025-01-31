@@ -18,11 +18,14 @@ public class PlayerController : MonoBehaviour
     bool isMoving;
     //prêdkoœæ zmiany pasa
     public float laneChangeSpeed = 5.0f;
+    //levelmanager
+    LevelManager levelManager;
     // Start is called before the first frame update
     void Start()
     {
         targetLane = Lane.CENTER;
         isMoving = false;
+        levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
     }
 
     // Update is called once per frame
@@ -80,5 +83,7 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Kolizja z: " + other.name);
+        Destroy(other.gameObject);
+        levelManager.AddPoints();
     }
 }
