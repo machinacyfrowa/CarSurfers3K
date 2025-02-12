@@ -14,6 +14,8 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
         score = 0;
+        //upewniam siê, ¿e gra wystartuje po za³adowaniu poziomu
+        Time.timeScale = 1;
     }
 
     // Update is called once per frame

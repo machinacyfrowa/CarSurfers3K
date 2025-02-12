@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 //lane przechowuje wspó³rzêdne x dla konkretnych pasów drogowych
 enum Lane
@@ -20,6 +21,10 @@ public class PlayerController : MonoBehaviour
     public float laneChangeSpeed = 5.0f;
     //levelmanager
     LevelManager levelManager;
+    //ekran pauzy
+    public GameObject pauseScreen;
+    //licznik paliwa
+    public GameObject fuelGauge;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,7 +45,16 @@ public class PlayerController : MonoBehaviour
             Move(); //je¿eli flaga isMoving jest true to wykonaj funkcjê Move
 
         //Debug.Log("Docelowy pas:" + targetLane);
-
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            TogglePauseScreen();
+        }
+        //obli¿ wskaŸnik paliwa o 0.1 jednostki na sekundê
+        fuelGauge.GetComponent<Slider>().value -= 0.1f * Time.deltaTime;
+        if(fuelGauge.GetComponent<Slider>().value <= 0)
+        {
+            levelManager.GameOver();
+        }
     }
     void GetInput()
     {
@@ -88,9 +102,28 @@ public class PlayerController : MonoBehaviour
             Destroy(other.gameObject);
             levelManager.AddPoints();
         }
+        if (other.tag == "Fuel")
+        {
+            Destroy(other.gameObject);
+            fuelGauge.GetComponent<Slider>().value = 1;
+        }
         if (other.tag == "NPCar")
         {
             levelManager.GameOver();
+        }
+    }
+    private void TogglePauseScreen()
+    {
+        //je¿eli gra "chodzi" to zatrzymaj czas
+        if (Time.timeScale == 1)
+        {
+            Time.timeScale = 0;
+            pauseScreen.SetActive(true);
+        }
+        else //je¿eli gra ju¿ jest zapauzowana to wznow czas
+        {
+            Time.timeScale = 1;
+            pauseScreen.SetActive(false);
         }
     }
 }

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Coin
   - NPCar
+  - Fuel
   layers:
   - Default
   - TransparentFX
