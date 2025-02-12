@@ -83,7 +83,14 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Kolizja z: " + other.name);
-        Destroy(other.gameObject);
-        levelManager.AddPoints();
+        if(other.tag == "Coin")
+        {
+            Destroy(other.gameObject);
+            levelManager.AddPoints();
+        }
+        if (other.tag == "NPCar")
+        {
+            levelManager.GameOver();
+        }
     }
 }
