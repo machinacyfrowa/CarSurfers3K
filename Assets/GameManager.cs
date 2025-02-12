@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     {
         //nie niszcz obiektu przy przejœciu do innej sceny
         //bêdzie dalej istnieæ po za³adowaniu poziomu
-        DontDestroyOnLoad(this.gameObject);
+        //DontDestroyOnLoad(this.gameObject);
     }
     public void NewGame()
     {
@@ -19,5 +19,13 @@ public class GameManager : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    public void MainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 }
